@@ -1,0 +1,75 @@
+doctype html
+html
+    head(lang="en")
+        meta(charset="UTF-8")
+        link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.css")
+        title
+    body
+        .row
+            .large-12.columns
+                .nav-bar.right
+                    ul.button-group
+                        li
+                            a.button(href="#") Link 1
+                        li
+                            a.button(href="#") Link 2
+                        li
+                            a.button(href="#") Link 3
+                        li
+                            a.button(href="#") Link 4
+                h1
+                    | !{Blog}
+                    small &nbsp;!{tagline}.
+                hr
+        .row
+            .large-9.columns(role="content")
+                each art in articles
+                    article
+                        h3
+                            a(href="#")=art.title
+                        h6
+                            | Written by&nbsp;
+                            a(href="#")=art.author
+                            | &nbsp;on&nbsp;
+                            =art.date
+                        .row
+                            //.large-6.columns
+                            img(src=art.img style="float:right;padding: 5px 0 5px 20px;")
+                            p(style="text-align:justify;").
+                                !{art.content}
+                    hr
+
+           // aside.large-3.columns
+                h5 Categories
+                ul.side-nav
+                    li
+                        a(href="#") News
+                    li
+                        a(href="#") Code
+                    li
+                        a(href="#") Design
+                    li
+                        a(href="#") Fun
+                    li
+                        a(href="#") Weasels
+                .panel
+                    h5 Featured
+                    p
+                        | Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow.
+                    a(href="#") Read More &#8594;
+        footer.row
+            .large-12.columns
+                hr
+                .row
+                    .large-6.columns
+                        p &#169; Copyright no one at all. Go to town.
+                    .large-6.columns
+                        ul.inline-list.right
+                            li
+                                a(href="#") Link 1
+                            li
+                                a(href="#") Link 2
+                            li
+                                a(href="#") Link 3
+                            li
+                                a(href="#") Link 4
