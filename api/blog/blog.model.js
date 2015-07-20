@@ -31,8 +31,9 @@ var PostSchema = new Schema({
 		type:Date,
 		default:Date.now
 	},
-	title: String,
-	content: String,
+	title:{ type:String, required:true},
+	titleUrl: { type:String, unique : true, required : true, dropDups: true},
+	content: { type:String, required:true},
 	date: Date
 });
 

@@ -2,7 +2,7 @@
     <div ng-repeat="post in blogList.posts track by $index">
         <article>
 
-            <h3><a href="#">{{post.title}}</a></h3>
+            <h3><a ng-href="blog/{{post.titleUrl}}">{{post.title}}</a></h3>
             <h6>Written by <a href="#">{{post.author}}</a> {{post.created_at}}</h6>
 
             <div class="row">
@@ -16,7 +16,7 @@
 
 
         </article>
-
-        <hr ng-hide="$last"/>
+        <!-- hide the last one always, doesn't work when just 1 so hide hr if only 1 post  -->
+        <hr ng-hide="$last || blogList.posts.length < 1"/>
     </div>
 </div>

@@ -1,0 +1,18 @@
+<div class="large-9 columns" role="content">
+        <article>
+
+            <h3><a href="#">{{blog.post.title}}</a></h3>
+            <h6>Written by <a href="#">{{blog.post.author}}</a> {{blog.post.created_at}}</h6>
+
+            <div class="row">
+                <div class="large-6 columns" ng-bind-html="blog.post.content | unsafe">
+
+                </div>
+                <div class="large-6 columns">
+                    <img src="http://placehold.it/400x240&text=[img]"/>
+                </div>
+            </div>
+
+
+        </article>
+</div>

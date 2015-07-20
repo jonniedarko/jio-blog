@@ -1,7 +1,7 @@
 /**
  * Created by i311181 on 20 Jul 2015.
  */
-angular.module('blog.read', ['blgCRUD'])
+angular.module('blog.read.list', ['blgCRUD'])
 	.filter('unsafe', HtmlFilter)
 	.controller('BlogListController', BlogListController);
 

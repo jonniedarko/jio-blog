@@ -24,9 +24,10 @@ function isAuthorised(req, res, next) {
 }
 
 // get /api/blog/:id
-router.get('/:id', function (req, res) {
+router.get('/:titleUrl', function (req, res) {
 
-	ctrl.getPost(res.body.id)
+
+	ctrl.getPost(req.params.titleUrl)
 		.then(function (articles) {
 			res.status(200).json(articles);
 		})

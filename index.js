@@ -15,6 +15,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/api/blog', blogRoutes);
 
+app.all('/*', function(req, res, next) {
+	// Just send the index.html for other files to support HTML5Mode
+	res.sendFile('index.html', { root: __dirname+'/public' });
+});
+
 var host;
 var port = process.env.PORT || 3000;
 var node_env = process.env.NODE_ENV || 'DEV';

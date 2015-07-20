@@ -23,6 +23,7 @@ function createPost(articleData) {
 	article.author = articleData.author;
 	article.content = articleData.content;
 	article.title = articleData.title;
+	article.titleURl = articleData.title.replace(/\s+/g, '-').toLowerCase();
 	article.save(function (err, savedArticle) {
 		if (err) {
 			deferred.reject(err);
@@ -38,9 +39,9 @@ function createPost(articleData) {
  * @param id
  * @returns promise
  */
-function getPost(id) {
+function getPost(titleUrl) {
 	var deferred = q.defer();
-	Post.findById(id)
+	Post.findOne({titleUrl:titleUrl})
 		.exec(function (err, article) {
 			if (err) {
 				deferred.reject(err)

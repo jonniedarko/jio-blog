@@ -13,9 +13,9 @@ function config($routeProvider, $locationProvider){
 			controllerAs: 'blogList'
 		})
 		.when('/blog/:title', {
-			controller: 'HomeController',
-			templateUrl: 'app/blog/home.view.html',
-			controllerAs: 'home'
+			controller: 'BlogViewController',
+			templateUrl: 'app/read/single/single.view.html',
+			controllerAs: 'blog'
 		})
 		.when('/create', {
 			controller: 'ComposerController',
@@ -35,4 +35,6 @@ function config($routeProvider, $locationProvider){
 			controllerAs: 'register'
 		})*/
 		.otherwise({ redirectTo: '/blog' });
+
+	$locationProvider.html5Mode(true);
 }
