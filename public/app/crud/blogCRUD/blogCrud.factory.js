@@ -4,7 +4,7 @@ angular.module('blgCRUD', ['ngResource'])
 composerFactory.$inject = ['$resource'];
 function composerFactory($resource) {
 	return $resource('/api/blog/:id', {id: '@id'}, {
-		create: {method: 'POST', params: {author: '', content: '', title: ''}},
+		create: {method: 'POST'},
 		getList: {method: 'GET', isArray: true}
 	});
 }

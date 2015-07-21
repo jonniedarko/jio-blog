@@ -8,21 +8,6 @@ var ctrl = require('./blog.controller');
 var http = require("http");
 var https = require("https");
 
-function isAuthorised(req, res, next) {
-	request.post('/', {
-			form: {
-				key: 'value'
-
-			}
-		}, function (err, response, body) {
-		console.log('err', err);
-		console.log('response.body', response.body);
-			req.body.test = response.body.isAuthorised;
-			next();
-		});
-
-}
-
 // get /api/blog/:id
 router.get('/:titleUrl', function (req, res) {
 
@@ -61,6 +46,7 @@ router.post('/', function (req, res) {
 			res.status(201).json(article);
 		})
 		.catch(function (err) {
+			console.log('ERROR:', err);
 			res.status(500).end();
 		});
 });

@@ -23,7 +23,7 @@ function createPost(articleData) {
 	article.author = articleData.author;
 	article.content = articleData.content;
 	article.title = articleData.title;
-	article.titleURl = articleData.title.replace(/\s+/g, '-').toLowerCase();
+	article.titleUrl = articleData.title.replace(/\s+/g, '-').toLowerCase();
 	article.save(function (err, savedArticle) {
 		if (err) {
 			deferred.reject(err);
