@@ -22,7 +22,10 @@ function config($routeProvider, $locationProvider, $httpProvider) {
 		.when('/create', {
 			controller: 'ComposerController',
 			templateUrl: 'app/composer/composer.view.html',
-			controllerAs: 'composer'
+			controllerAs: 'composer',
+			access: {
+				requiredLogin: true
+			}
 		})
 		.when('/login', {
 			controller: 'LoginController',
@@ -53,6 +56,7 @@ function config($routeProvider, $locationProvider, $httpProvider) {
 
 run.$inject = ['$rootScope', '$location', '$window', 'AuthenticationFactory'];
 function run($rootScope, $location, $window, AuthenticationFactory) {
+	var postLogInRoute;
 	AuthenticationFactory.check();
 
 	$rootScope.$on('$routeChangeStart', onRouteChangeStart);
@@ -60,20 +64,27 @@ function run($rootScope, $location, $window, AuthenticationFactory) {
 
 	function onRouteChangeStart(event, nextRoute, currentRoute) {
 		if ((nextRoute.access && nextRoute.access.requiredLogin) && !AuthenticationFactory.isLoggedIn()) {
-			$location.path("/login");
+			postLogInRoute = $location.path();
+			console.log('postLogInRoute', postLogInRoute);
+			$location.path('/login');
 		} else {
-			// check if user object exists else fetch it. This is incase of a page refresh
 			if (!AuthenticationFactory.user) AuthenticationFactory.user = $window.sessionStorage.user;
 			if (!AuthenticationFactory.userRole) AuthenticationFactory.userRole = $window.sessionStorage.userRole;
+			if (AuthenticationFactory.isLoggedIn() && postLogInRoute) {
+				$location.path(postLogInRoute);
+				postLogInRoute = null;
+			}
+
+
 		}
 	}
 
-	function routeChangeSuccess(event, nextRoute, currentRoute) {
-		//$rootScope.showMenu = AuthenticationFactory.isLogged;
-		//$rootScope.role = AuthenticationFactory.userRole;
-		// if the user is already logged in, take him to the home page
-		if (AuthenticationFactory.isLoggedIn() == true && $location.path() == '/login') {
-			$location.path('/blog');
+		function routeChangeSuccess(event, nextRoute, currentRoute) {
+			//$rootScope.showMenu = AuthenticationFactory.isLogged;
+			//$rootScope.role = AuthenticationFactory.userRole;
+			// if the user is already logged in, take him to the home page
+			if (AuthenticationFactory.isLoggedIn() == true && $location.path() == '/login') {
+				$location.path('/blog');
+			}
 		}
 	}
-}
