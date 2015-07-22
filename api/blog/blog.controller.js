@@ -1,6 +1,7 @@
 'use strict';
 var q = require('q');
 var Post = require('./blog.model').Post;
+var userService  = require('../../services/userService');
 
 module.exports = {
 	createPost: createPost,
@@ -27,8 +28,17 @@ function createPost(articleData) {
 	article.save(function (err, savedArticle) {
 		if (err) {
 			deferred.reject(err);
+		}else {
+			userService.getUser(article.author)
+				.then(function(user){
+					console.log(user);
+					deferred.resolve(savedArticle)
+				})
+				.catch(function (){
+					deferred.reject(savedArticle)
+				})
+
 		}
-		deferred.resolve(savedArticle)
 	});
 	return deferred.promise;
 };

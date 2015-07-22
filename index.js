@@ -13,6 +13,11 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use(function(req, res, next){
+	req.user = req.headers['x-key'];
+	next();
+});
+
 app.use('/api/blog', blogRoutes);
 
 app.all('/*', function(req, res, next) {

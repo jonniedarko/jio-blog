@@ -14,11 +14,11 @@ function LoginController($window,$location, UserAuthFactory, AuthenticationFacto
 			UserAuthFactory.login(email, password).success(function (data) {
 
 				AuthenticationFactory.setLoggedIn(true);
-				AuthenticationFactory.user = data.email;
+				AuthenticationFactory.user = data.user;
 				//AuthenticationFactory.userRole = data.user.role;
 
 				$window.sessionStorage.token = data.token;
-				$window.sessionStorage.user = data.email; // to fetch the user details on refresh
+				$window.sessionStorage.user = data.user; // to fetch the user details on refresh
 				//$window.sessionStorage.userRole = data.user.role; // to fetch the user details on refresh
 
 				$location.path('/blog');

@@ -32,7 +32,7 @@ function AuthInterceptor($window, $q){
 		request: function(config) {
 			config.headers = config.headers || {};
 			if ($window.sessionStorage.token) {
-				config.headers['X-Access-Token'] = $window.sessionStorage.token;
+				config.headers.authorization = $window.sessionStorage.token;
 				config.headers['X-Key'] = $window.sessionStorage.user;
 				config.headers['Content-Type'] = "application/json";
 			}

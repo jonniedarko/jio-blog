@@ -1,6 +1,7 @@
 var request = require('request');
 var express = require('express');
 var router = express.Router();
+var auth = require('../../../AuthClient');
 
 
 var ctrl = require('./blog.controller');
@@ -39,9 +40,10 @@ router.get('/', function (req, res) {
 
 });
 // post /api/blog
-router.post('/', function (req, res) {
-	console.log('req.body', req.body);
-	ctrl.createPost(req.body)
+router.post('/', auth.verify, function (req, res) {
+	var art = req.body;
+	art.author = req.user;
+	ctrl.createPost(art)
 		.then(function (article) {
 			res.status(201).json(article);
 		})
