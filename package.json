@@ -1,10 +1,12 @@
 {
-  "name": "blog",
+  "name": "jio-blog",
   "version": "1.0.0",
-  "description": "a basic blog engine running on node.js",
+  "description": "a basic blog CRUD running on node.js",
   "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "gulp serve"
   },
   "author": "",
   "license": "none",
@@ -13,13 +15,16 @@
     "express": "^4.13.0",
     "mongoose": "^4.0.6",
     "mqtt": "^1.3.5",
-    "q": "^1.4.1"
+    "q": "^1.4.1",
+    "request": "^2.29.0"
   },
   "devDependencies": {
     "chai": "^3.0.0",
     "gulp": "^3.9.0",
+    "gulp-env": "^0.2.0",
     "gulp-mocha": "^2.1.2",
     "gulp-nodemon": "^2.0.3",
+    "jio-blog-angular-client": "git://github.com/jonniedarko/jio-blog-angular-client#v0.0.1-beta",
     "mocha": "^2.2.5",
     "supertest": "^1.0.1",
     "supertest-as-promised": "^2.0.2"

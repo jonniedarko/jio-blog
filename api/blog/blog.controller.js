@@ -1,7 +1,7 @@
 'use strict';
 var q = require('q');
 var Post = require('./blog.model').Post;
-var userService  = require('../../services/userService');
+var userService = require('../../services/userService');
 
 module.exports = {
 	createPost: createPost,
@@ -28,15 +28,24 @@ function createPost(articleData) {
 	article.save(function (err, savedArticle) {
 		if (err) {
 			deferred.reject(err);
-		}else {
-			userService.getUser(article.author)
-				.then(function(user){
-					console.log(user);
-					deferred.resolve(savedArticle)
-				})
-				.catch(function (){
-					deferred.reject(savedArticle)
-				})
+		} else {
+			console.log('userService.isServiceAvailable()', userService.isServiceAvailable());
+			if (userService.isServiceAvailable()) {
+				userService.getUser(article.author)
+					.then(function (user) {
+						console.log(user);
+						savedArticle.user = user;
+						var art = savedArticle.toJSON();
+						art.user = user;
+						console.log('savedArticle', art);
+						deferred.resolve(art)
+					})
+					.catch(function () {
+						deferred.reject(savedArticle)
+					})
+			} else {
+				deferred.resolve(savedArticle);
+			}
 
 		}
 	});
@@ -51,7 +60,7 @@ function createPost(articleData) {
  */
 function getPost(titleUrl) {
 	var deferred = q.defer();
-	Post.findOne({titleUrl:titleUrl})
+	Post.findOne({titleUrl: titleUrl})
 		.exec(function (err, article) {
 			if (err) {
 				deferred.reject(err)
@@ -71,14 +80,14 @@ function getPost(titleUrl) {
  */
 function getPosts(from) {
 	var deferred = q.defer();
-	var limit = 10;
+	var limit = 5;
 	/*var limitDate = date || Date.now();
 	 { created_at: { $lte: limitDate } }
 	 */
 	Post.find()
-		.skip(from*limit)
-		.limit( limit )
-		.sort( '-created_at' )
+		.skip(from * limit)
+		.limit(limit)
+		.sort('-created_at')
 		.exec(function (err, articles) {
 			if (err) {
 				deferred.reject(err)
@@ -120,12 +129,34 @@ function deletePost(id) {
  */
 function updatePost(id, updatedArticle) {
 	var deferred = q.defer();
-	Post.update({_id: id}, updatedArticle, function (err) {
-		if (err) {
-			deferred.reject(err)
+
+	Post.findOne({_id: id}, function (err, article) {
+		var oldTitleUrl = article.titleUrl;
+		if (updatedArticle.title) {
+			article.title = updatedArticle.title;
+			//replace the spaces with `-` for the Url title
+			article.titleUrl = updatedArticle.title.replace(/\s+/g, '-').toLowerCase();
 		}
-		deferred.resolve();
+		if (updatedArticle.content) {
+			article.content = updatedArticle.content;
+		}
+
+		article.updated_at = new Date();
+		article.save(function (err, savedArticle) {
+			if (err) {
+				deferred.reject(err);
+			} else {
+				if(oldTitleUrl !== savedArticle.titleUrl){
+					deferred.resolve({redirectTo: savedArticle.titleUrl});
+				}
+				else{
+					deferred.resolve();
+				}
+
+			}
+		});
 	});
+
 
 	return deferred.promise;
 };

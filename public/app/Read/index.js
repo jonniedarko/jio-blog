@@ -1,1 +1,0 @@
-angular.module('blog.read', ['blog.read.single', 'blog.read.list']);

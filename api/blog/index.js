@@ -1,4 +1,4 @@
-var request = require('request');
+
 var express = require('express');
 var router = express.Router();
 var auth = require('../../../AuthClient');
@@ -26,7 +26,7 @@ router.get('/:titleUrl', function (req, res) {
 // get /api/blog
 router.get('/', function (req, res) {
 
-	var page = req.body.pageNumber || 0;
+	var page = req.query.page || 0;
 
 
 	ctrl.getPosts(page)
@@ -54,12 +54,14 @@ router.post('/', auth.verify, function (req, res) {
 });
 
 // put /api/blog
-router.put('/', function (req, res) {
+router.put('/:id',  auth.verify, function (req, res) {
 	var id = req.body.id;
 	var post = req.body.post;
+	console.log('PUTTING', id, post)
 
 	ctrl.updatePost(id, post)
-		.then(function () {
+		.then(function (info) {
+			console.log('info', info)
 			res.status(204).json();
 		})
 		.catch(function (err) {
@@ -68,7 +70,7 @@ router.put('/', function (req, res) {
 });
 
 // put /api/blog/:id
-router.delete('/:id', function (req, res) {
+router.delete('/:id',  auth.verify, function (req, res) {
 	var id = req.params.id;
 
 	ctrl.deletePost(id)
