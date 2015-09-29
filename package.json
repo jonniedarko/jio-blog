@@ -24,7 +24,9 @@
     "gulp-env": "^0.2.0",
     "gulp-mocha": "^2.1.2",
     "gulp-nodemon": "^2.0.3",
-    "jio-blog-angular-client": "git://github.com/jonniedarko/jio-blog-angular-client#v0.0.1-beta",
+    "jio-blog-angular-client": "git://github.com/jonniedarko/jio-blog-angular-client#v0.0.1-alpha",
+    "jio-user-service" : "https://github.com/jonniedarko/jio-user-service#v.0.0.3-alpha",
+    "jio-node-auth": "https://github.com/jonniedarko/jio-node-auth",
     "mocha": "^2.2.5",
     "supertest": "^1.0.1",
     "supertest-as-promised": "^2.0.2"

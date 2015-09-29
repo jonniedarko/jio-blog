@@ -20,6 +20,8 @@ app.use(function (req, res, next) {
 	next();
 });
 
+app = require('jio-user-service').init(app);
+
 app.use('/api/blog', blogRoutes);
 
 app.all('/*', function (req, res, next) {

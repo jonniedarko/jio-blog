@@ -1,7 +1,7 @@
 'use strict';
 var q = require('q');
 var Post = require('./blog.model').Post;
-var userService = require('../../services/userService');
+var userService = require('jio-user-service').service;
 
 module.exports = {
 	createPost: createPost,

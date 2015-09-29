@@ -1,7 +1,7 @@
 
 var express = require('express');
 var router = express.Router();
-var auth = require('../../../AuthClient');
+var auth = require('jio-node-auth')();
 
 
 var ctrl = require('./blog.controller');
