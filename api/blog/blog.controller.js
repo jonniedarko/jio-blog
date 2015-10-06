@@ -30,7 +30,11 @@ function createPost(articleData) {
 			deferred.reject(err);
 		} else {
 			console.log('userService.isServiceAvailable()', userService.isServiceAvailable());
+
 			if (userService.isServiceAvailable()) {
+				/*
+				 * populates user using service
+				 */
 				userService.getUser(article.author)
 					.then(function (user) {
 						console.log(user);
@@ -67,7 +71,19 @@ function getPost(titleUrl) {
 			} else if (!article) {
 				deferred.reject();
 			} else {
-				deferred.resolve(article)
+				/*
+				 * populates user using service
+				 */
+				if (userService.isServiceAvailable()) {
+					userService.getUser(article.author)
+						.then(function (doc) {
+							var art = article.toJSON();
+							art.user = doc.user;
+							deferred.resolve(art)
+						})
+				}else {
+					deferred.resolve(article)
+				}
 			}
 		});
 	return deferred.promise;
