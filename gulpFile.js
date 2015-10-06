@@ -11,7 +11,8 @@ gulp.task('serve', [], function () {
 			NODE_ENV: 'development',
 			PORT: '3000',
 			MONGO: 'mongodb://localhost:27017/blog'
-		}
+		},
+		nodeArgs: ['--debug']
 	});
 });
 
