@@ -2,7 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('./config.json');
-var staticFiles = 'node_modules/' + config.publicModule;
+
+var staticFiles = '../node_modules/' + config.publicModule;
 
 module.exports = app = express();
 var mongoUrl = process.env.MONGO || 'mongodb://localhost:27017/blog';
